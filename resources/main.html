@@ -1,11 +1,39 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WebBasedQuizGameWithWebCrawling</title>
 </head>
+
 <body>
-    temp
+    <!-- rootContainer -->
+    <!-- All of content will be included in this rootContainer-->
+    <div id="rootContainer" class="container">
+        <header>
+            <!-- I don't have good idea to fill this section yet.
+                If when a good idea comes to mind, plz add anything.
+                Untill-->
+        </header>
+        <!-- Only one of the three contents below (home, ranking, inGame) will be displayed at a time. -->
+        <div id="home" class="container content">
+            home
+            <!-- Start button, ranking button and etc will be added in this section-->
+        </div>
+        <div id="ranking" class="container content" style="display:none">
+            ranking
+            <!-- This section will show several ranking component -->
+            <!-- Infinity scroll will be used to show additional ranking -->
+        </div>
+        <div id="inGame" class="container content" style="display:none">
+            inGame
+            <!-- The actual game play will be excuted in this section -->
+        </div>
+        <footer>
+            <!-- Team member, info will be added in this section-->
+        </footer>
+    </div>
 </body>
+
 </html>
