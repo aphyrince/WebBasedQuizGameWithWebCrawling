@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WebBasedQuizGameWithWebCrawling</title>
+    <link rel = "stylesheet" href = "mainCss.css">
+
 </head>
 
 <body>
@@ -17,23 +19,38 @@
                 Untill-->
         </header>
         <!-- Only one of the three contents below (home, ranking, inGame) will be displayed at a time. -->
-        <div id="home" class="container content">
-            home
+        <div id="home" class="homeScreen">
             <!-- Start button, ranking button and etc will be added in this section-->
+            
+            <div class="button-grid">
+                <h1 style="text-align: center;">Quiz Demo</h1>
+                <button class = "start-button" id = "startBtn">Start Quiz</button>
+                <button class = "show-record-button" id = "showRecordBtn">Show Record</button>
+            </div>
+
         </div>
-        <div id="ranking" class="container content" style="display:none">
+        <div id="ranking" class="rankingScreen" style="display:none">
             ranking
             <!-- This section will show several ranking component -->
             <!-- Infinity scroll will be used to show additional ranking -->
+            <h1>Quiz Record</h1>
+            <div id="recordContainer"></div>
+            <button id="backToHomeBtn">Back to Home</button>
         </div>
-        <div id="inGame" class="container content" style="display:none">
+        <div id="inGame" class="quizScreen" style="display:none">
             inGame
             <!-- The actual game play will be excuted in this section -->
+            <h1>Quiz</h1>
+            <div id="questionContainer"></div>
+            <button id="nextQuestionBtn">Next Question</button>
         </div>
+        
         <footer>
             <!-- Team member, info will be added in this section-->
         </footer>
+        
     </div>
+    <script src = "mainJs.js"></script>
 </body>
 
 </html>
