@@ -11,6 +11,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const questionContainer = document.getElementById('questionContainer');
     const recordContainer = document.getElementById('recordContainer');
 
+    const userAnswerBox = document.getElementById('user-answer-box');
+
     let currentQuestionIndex = 0;
     let score = 0;
     let questions = [
@@ -32,7 +34,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     nextQuestionBtn.addEventListener('click', () => {
-        const userAnswer = document.getElementById('userAnswer').value;
+        const userAnswer = document.getElementById('user-answer-box').value;
+        console.log(userAnswer);
         if (userAnswer.toLowerCase() === questions[currentQuestionIndex].answer.toLowerCase()) {
             score++;
         }
@@ -45,6 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
             recordScreen.style.display = 'flex';
             showRecord();
         }
+
     });
 
     backToHomeBtn.addEventListener('click', () => {
@@ -55,8 +59,10 @@ document.addEventListener('DOMContentLoaded', () => {
     function showQuestion() {
         questionContainer.innerHTML = `
             <p>${questions[currentQuestionIndex].question}</p>
-            <input type="text" id="userAnswer">
+            
         `;
+        userAnswerBox.value = ``; //clear textbox
+        
     }
 
     function saveRecord() {

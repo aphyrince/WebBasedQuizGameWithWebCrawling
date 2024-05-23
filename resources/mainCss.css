@@ -4,15 +4,20 @@
     row-gap: 20px;
     grid-template-columns: 200px;
     margin-top: 200px;
-
-
     padding-bottom: 20px;
 
 }
 
+.box{
+    box-shadow: 0px 0px 5px;
+    border: none;
+    border-radius: 10px;
+    padding-top: 15px 100px;
+}
+
 
 button{
-    padding: 30px 50px;
+    padding: 20px 40px;
     font-size: 20px;
     border-style: none;
     border-radius: 10px;
@@ -20,8 +25,6 @@ button{
     color: white;
     cursor: pointer;
     transition: background-color 0.4s;
-    height: 100%;
-    
 }
 
 button:hover{
@@ -33,11 +36,10 @@ button:active{
 }
 
 
-#questionContainer {
-    margin: 20px 0;
 
-}
+
 
 #recordContainer {
     margin: 20px 0;
 }
+
