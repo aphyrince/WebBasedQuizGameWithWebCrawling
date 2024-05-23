@@ -15,6 +15,9 @@
     padding-top: 15px 100px;
 }
 
+body{
+    margin:0;
+}
 
 button{
     padding: 20px 40px;
@@ -35,11 +38,8 @@ button:active{
     background-color: rgba(59, 213, 213, 1);
 }
 
-
-
-
-
 #recordContainer {
     margin: 20px 0;
 }
+
 
