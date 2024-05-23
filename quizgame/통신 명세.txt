@@ -1,0 +1,59 @@
+1. 퀴즈 내용 요청
+    - HTTP method   :   get
+    - Api 경로      :   /getQuizSet
+    - 세부 내용     :   퀴즈 내용 세트 (문제, 정답) 10개 요청
+                        , AJAX를 사용
+                        , 중복이 없도록 현재까지 받은 퀴즈 수를 flag로 제공 -> query string에 붙여서 보내겠음. ex : /getQuizSet?flag=20;
+    - 응답 JSON 형식     :   
+    {
+        {
+            "question":"문제 내용",
+            "answer":"정답 내용"
+        },
+        {
+            "question":"문제 내용",
+            "answer":"정답 내용"
+        },
+        {
+            "question":"문제 내용",
+            "answer":"정답 내용"
+        },
+        ...
+    }
+
+2. 유저 게임 결과 전송
+    - HTTP method   :   post
+    - Api 경로      :   /postUserGameResultRecord
+    - 세부 내용     :   유저의 게임 결과를 서버에 전송함.
+                        , 유저의 이름 Name, 유저가 맞힌 퀴즈 수 resultScore 전송
+                        , AJAX사용
+                        , query string에 정보 붙여서 전송하겠음. ex : /postUserGameResultRecord?Name=staff&resultScore=13
+    - 응답 없음
+
+3. 랭킹 정보 요청
+    - HTTP method   :   get
+    - Api 경로      :   /getRankingInfoSet
+    - 세부 내용     :   서버에 저장되어 있는 랭킹 정보 세트 10개 요청
+                        , AJAX 사용
+                        , 클라이언트에서 무한 스크롤 방식으로 보여줄 예정
+                        , 랭킹 순위 rank, 유저이름 name, 해당 유저가 맞힌 퀴즈 수 score 요청
+                        , 중복이 없도록 현재까지 받은 랭킹 정보 세트 수를 flag에 담아 query string으로 제공하겠음. ex : /getRankingInfoSet?flag=20 -> 20명까지 받았다는 뜻
+    - 응답 JSON 형식     :
+    {
+        {
+            "rank":숫자,
+            "name":"유저 이름",
+            "score":"맞힌 퀴즈 수"
+        },
+        {
+            "rank":숫자,
+            "name":"유저 이름",
+            "score":"맞힌 퀴즈 수"
+        },
+        {
+            "rank":숫자,
+            "name":"유저 이름",
+            "score":"맞힌 퀴즈 수"
+        },
+        ...
+    }
