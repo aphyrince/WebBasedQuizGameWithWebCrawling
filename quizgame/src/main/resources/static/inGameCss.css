@@ -1,0 +1,128 @@
+.answer-submit-header{
+    position: fixed;
+    background-color: rgb(187, 218, 229);
+    padding: 50px 30px;
+    bottom: 0px;
+    display: flex;
+    flex: 0;
+    flex-direction: row;
+    left: 0px;
+    right: 0px;
+    justify-content: center;
+    column-gap: 20px;
+    min-width: 300px;
+
+}
+
+
+.next-icon{
+    height: 30px;
+    
+}
+
+#user-answer-box {
+    text-align: center;
+    font-size: 18px;
+    border: none;
+
+    border-radius: 10px;
+    width: 100%;
+    margin-top: 0px;
+    
+    transition: box-shadow 0.2s;
+}
+
+input:focus{
+    outline:0;
+    box-shadow: 0px 0px 5px;
+}
+
+.bg{
+    background-color: rgba(0,0,0,0.8);
+    width: 2000px;
+    height: 1000px;
+}
+
+#questionContainer{
+    display: flex;
+    background-color: rgb(137, 137, 201);
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    padding: 10px 40px;
+    font-size: 30px;
+    white-space: prewrap;
+    border-radius: 30px;
+    min-width: 350px;
+    color: white;
+    
+}
+
+.nextQuestionBtn{
+    margin-left: 30px;
+}
+
+.timer-trapezoid{
+    position: relative;
+    top: 0px;
+    width: 200px;
+    height: 100px;
+    background: rgb(187, 218, 229);
+    transform: perspective(10px) rotateX(-1deg);
+    border-radius: 30px;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+}
+
+.timer{
+    position: relative;
+    width: 100%;
+    height: 3em; 
+    background-color: rgb(97, 97, 151);
+    border-radius: 1.5em; /*em = a scalable unit of measurement that 
+    defines the size of an element relative to its parent's font size.*/
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    right: 2px;
+    top: 50px;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+
+.timer::before{
+    content: attr(data-time); /*content: element added via css, not html*/
+    display: flex;
+    align-items: center;
+    left: .5em;
+    top: .5em;
+    bottom: .5em;
+    position: absolute;
+
+    width: calc(var(--width, 0) * 1%); /*CSS variable
+    +no way to access and modify css attribute directly in html and js
+    +use var(--varname, value)
+    
+    */
+    min-width: 0em;
+    max-width: calc(100% - 3em);
+    background-color: rgba(0, 255, 255, 0.486);
+    border-radius: 1em;
+
+    padding: 1em;
+    
+}
+
+.timerContainer{
+    
+    width: 100%;
+    display: flex;
+    position: absolute;
+    
+}
+
+
