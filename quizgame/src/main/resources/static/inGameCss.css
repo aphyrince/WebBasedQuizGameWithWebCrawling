@@ -125,4 +125,63 @@ input:focus{
     
 }
 
+/* mainCss.css or inGameCss.css */
+
+/* Ranking Screen Styles */
+.rankingScreen {
+    padding: 20px;
+    text-align: center;
+    background-color: #f9f9f9;
+}
+
+#recordContainer {
+    margin-top: 20px;
+    max-height: 500px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    padding: 10px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.rank-item {
+    border-bottom: 1px solid #ddd;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.rank-item:last-child {
+    border-bottom: none;
+}
+
+.rank-item span {
+    display: inline-block;
+    width: 150px;
+    text-align: left;
+}
+
+#searchBox {
+    margin-bottom: 20px;
+    padding: 10px;
+    width: 80%;
+    max-width: 400px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+#backToHomeBtn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+#backToHomeBtn:hover {
+    background-color: #0056b3;
+}
 

@@ -125,3 +125,75 @@ function showRecord() {
     `;
 }
 });
+
+
+/* Ranking Screen js */
+document.addEventListener('DOMContentLoaded', (event) => {
+    const startBtn = document.getElementById('startBtn');
+    const showRecordBtn = document.getElementById('showRecordBtn');
+    const backToHomeBtn = document.getElementById('backToHomeBtn');
+    const homeScreen = document.getElementById('home');
+    const rankingScreen = document.getElementById('ranking');
+    const recordContainer = document.getElementById('recordContainer');
+    const searchBox = document.getElementById('searchBox');
+
+    const records = [
+        { name: 'TestPlayer1', score: 3 },
+        { name: 'TestPlayer2', score: 2 },
+        { name: 'TestPlayer3', score: 1 },
+        // Add more records as needed
+    ];
+
+    let filteredRecords = [...records];
+    let currentPage = 0;
+    const recordsPerPage = 10;
+
+    startBtn.addEventListener('click', () => {
+        homeScreen.style.display = 'none';
+        inGameScreen.style.display = 'block';
+    });
+
+    showRecordBtn.addEventListener('click', () => {
+        homeScreen.style.display = 'none';
+        rankingScreen.style.display = 'block';
+        recordContainer.innerHTML = '';
+        currentPage = 0;
+        loadRecords();
+    });
+
+    backToHomeBtn.addEventListener('click', () => {
+        rankingScreen.style.display = 'none';
+        homeScreen.style.display = 'block';
+    });
+
+    searchBox.addEventListener('input', () => {
+        const searchTerm = searchBox.value.toLowerCase();
+        filteredRecords = records.filter(record => record.name.toLowerCase().includes(searchTerm));
+        recordContainer.innerHTML = '';
+        currentPage = 0;
+        loadRecords();
+    });
+
+    function loadRecords() {
+        const start = currentPage * recordsPerPage;
+        const end = start + recordsPerPage;
+        const paginatedRecords = filteredRecords.slice(start, end);
+
+        paginatedRecords.forEach((record, index) => {
+            const rankItem = document.createElement('div');
+            rankItem.className = 'rank-item';
+            rankItem.innerHTML = `<span>${start + index + 1}. ${record.name}</span><span>${record.score}</span>`;
+            recordContainer.appendChild(rankItem);
+        });
+    }
+
+    function handleScroll() {
+        const { scrollTop, scrollHeight, clientHeight } = recordContainer;
+        if (scrollTop + clientHeight >= scrollHeight - 5) {
+            currentPage++;
+            loadRecords();
+        }
+    }
+
+    recordContainer.addEventListener('scroll', handleScroll);
+});
