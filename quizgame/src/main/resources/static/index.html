@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WebBasedQuizGameWithWebCrawling</title>
-    <link rel = "stylesheet" href = "mainCss.css">
-    <link rel = "stylesheet" href = "inGameCss.css">
+    <link rel="stylesheet" href="mainCss.css">
+    <link rel="stylesheet" href="inGameCss.css">
 
 </head>
 
@@ -22,12 +22,12 @@
         <!-- Only one of the three contents below (home, ranking, inGame) will be displayed at a time. -->
         <div id="home" class="homeScreen">
             <!-- Start button, ranking button and etc will be added in this section-->
-            
+
             <div class="button-grid">
-                <div class = "box">
+                <div class="box">
                     <h1 style="text-align: center;">Quiz Demo</h1>
-                    <button class = "start-button" id = "startBtn">Start Quiz</button>
-                    <button class = "show-record-button" id = "showRecordBtn">Show Record</button>
+                    <button class="start-button" id="startBtn">Start Quiz</button>
+                    <button class="show-record-button" id="showRecordBtn">Show Record</button>
                 </div>
             </div>
 
@@ -41,28 +41,28 @@
             <button id="backToHomeBtn">Back to Home</button>
         </div>
         <div id="inGame" class="quizScreen" style="display:none;">
-            <div class = "bg"></div>
+            <div class="bg"></div>
             <!-- The actual game play will be excuted in this section -->
-            <div class = "header"></div>
-            <div class = "timerContainer">
-                <div class = "timer" style="--width: 100"></div>          
+            <div class="header"></div>
+            <div class="timerContainer">
+                <div class="timer" style="--width: 100"></div>
             </div>
-            <div id="questionContainer" style = "margin : auto"></div>
-            <div class = "answer-submit-header">   
-                <input type = "text" id = "user-answer-box" placeholder="Type your answer here">
+            <div id="questionContainer" style="margin : auto"></div>
+            <div class="answer-submit-header">
+                <input type="text" id="user-answer-box" placeholder="Type your answer here">
                 <button id="nextQuestionBtn">
-                    <img class = "next-icon" src = "icons/right-arrow.png">
+                    <img class="next-icon" src="icons/right-arrow.png">
                 </button>
             </div>
-            
+
         </div>
-        
+
         <footer>
             <!-- Team member, info will be added in this section-->
         </footer>
-        
+
     </div>
-    <script src = "mainJs.js"></script>
+    <script src="mainJs.js" type="module"></script>
 </body>
 
 </html>
