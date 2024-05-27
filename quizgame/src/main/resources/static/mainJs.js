@@ -24,6 +24,10 @@ document.addEventListener('DOMContentLoaded', () => {
     rankPageObj.backToHomeBtn.addEventListener('click', () => {
         rankPageObj.recordScreen.style.display = 'none';
         homeObj.homeScreen.style.display = 'block';
+        
+        while(rankPageObj.recordContainer.hasChildNodes()){
+            rankPageObj.recordContainer.removeChild(rankPageObj.recordContainer.firstChild);
+        }
     });
 
     rankPageObj.searchBox.addEventListener('input', () => {
@@ -45,40 +49,33 @@ document.addEventListener('DOMContentLoaded', () => {
     inGameObj.nextQuestionBtn.addEventListener('click', () => {
         const userAnswer = document.getElementById('user-answer-box').value;
         console.log(userAnswer);
+        // 정답일 시
         if (userAnswer.toLowerCase() === inGameObj.questions[inGameObj.currentQuestionIndex].answer.toLowerCase()) {
-            score++;
+            inGameObj.score++;
+            // console.log("정답 "+inGameObj.score,userAnswer+","+inGameObj.questions[inGameObj.currentQuestionIndex].answer);
+        }
+        // 오답일 시
+        else{
+            // console.log("오답 "+inGameObj.score,userAnswer+","+inGameObj.questions[inGameObj.currentQuestionIndex].answer);
+            inGameObj.gameOver();
+            inGameObj.quizScreen.style.display = 'none';
+            rankPageObj.recordScreen.style.display = 'block';
+            rankPageObj.loadRecords();
         }
         inGameObj.currentQuestionIndex++;
+        //문제가 다 떨어지면 서버에 추가 문제 요청
         if (inGameObj.currentQuestionIndex === inGameObj.questions.length) {
-            function onReadyStateChange(event) {
-                const currentAjaxRequest = event.currentTarget;
-                if (currentAjaxRequest.readyState === XMLHttpRequest.DONE
-                    && currentAjaxRequest.status === 200) {
-                    const responsedQuizSet = JSON.parse(currentAjaxRequest.responseText);
-                    responsedQuizSet.forEach(quizSet => {
-                        inGameObj.questions.push(quizSet);
-                    });
-                }
-                else {
-                    console.error('quizRequest failed');
-                }
-            }
-            const ajaxRequest = new XMLHttpRequest();
-
-            ajaxRequest.onreadystatechange = onReadyStateChange;
-            ajaxRequest.open('GET', `/getQuizSet?flag=${inGameObj.questions.length}`);
-            ajaxRequest.send();
+            inGameObj.requestQuizSet();
         }
-        else if (inGameObj.currentQuestionIndex < inGameObj.questions.length) {
+        if (inGameObj.currentQuestionIndex < inGameObj.questions.length) {
             inGameObj.showQuestion();
             inGameObj.resetTimer();
         }
         else {
-            rankPageObj.score = inGameObj.score;
-            inGameObj.saveRecord();
+            inGameObj.gameOver();
             inGameObj.quizScreen.style.display = 'none';
-            rankPageObj.recordScreen.style.display = 'flex';
-            rankPageObj.showRecord();
+            rankPageObj.recordScreen.style.display = 'block';
+            rankPageObj.loadRecords();
         }
 
     });
