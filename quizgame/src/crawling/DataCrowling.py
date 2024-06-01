@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import re, csv
 
-url = "https://m.blog.naver.com/wlstmf2306/222408435436"  # 실제 퀴즈 웹사이트 URL로 대체
+url = "https://m.blog.naver.com/wlstmf2306/222408435436"
 res = requests.get(url)
 soup = BeautifulSoup(res.text, 'html.parser')
 
