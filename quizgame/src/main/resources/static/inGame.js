@@ -27,7 +27,6 @@ inGameObj.showQuestion = showQuestion;
 inGameObj.gameOver = gameOver;
 inGameObj.moveToNextQuestion = moveToNextQuestion;
 inGameObj.showNextQuestion = showNextQuestion;
-inGameObj.submitAnswer = submitAnswer;
 
 
 inGameObj.requestQuizSet = requestQuizSet;
@@ -52,7 +51,7 @@ function startTimer() {
             inGameObj.timer.style.setProperty('--width', 0);
             if (inGameObj.currentQuestionIndex < inGameObj.questions.length){
                 inGameObj.moveToNextQuestion();
-            }      
+            }       
         }
 
     }, inGameObj.intervalTime)
