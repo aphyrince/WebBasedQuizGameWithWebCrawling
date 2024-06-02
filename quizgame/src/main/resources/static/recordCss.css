@@ -1,0 +1,55 @@
+#backToHomeBtn, #restartBtn{
+    
+    justify-content: center;
+    display: flex;
+    max-width: 150px;
+    align-items: center;
+    height: 100px;
+    margin-top: 10px;
+
+}
+
+#restartBtn{
+    margin-left: 20px;
+}
+
+#backToHomeBtn{
+    margin-right: 20px;
+}
+
+button:hover{
+    background-color: rgba(59, 213, 213, 0.4);
+}
+
+button:active{
+    background-color: rgba(59, 213, 213, 1);
+}
+
+
+.leaderboard-title{
+    display: flex;
+    width: 200px;
+    align-items: center;
+
+}
+.home-icon, .restart-icon{
+    height: 30px;
+
+}
+
+.leaderboard-header{
+    position: fixed;
+    background-color: rgb(187, 218, 229);
+    display: flex;
+    grid-template-columns: 1fr 1fr 1fr;
+    right: 0px;
+    left: 0px;
+    height: 120px;
+    justify-content: space-between;
+}
+
+#recordContainer {
+    padding-top: 300px;
+    margin: 20px 0;
+    
+}
