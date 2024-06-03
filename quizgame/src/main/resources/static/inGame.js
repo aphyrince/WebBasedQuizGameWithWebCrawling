@@ -13,9 +13,9 @@ inGameObj.questions = [
 ];
 
 inGameObj.timer = document.getElementsByClassName('timer')[0];
-inGameObj.totalTime = 10000; //in ms
+inGameObj.totalTime = 5000; //in ms
 inGameObj.resetTotalTime = inGameObj.totalTime;
-inGameObj.intervalTime = 10 //interval in ms;
+inGameObj.intervalTime = inGameObj.totalTime/1000; //interval in ms;
 inGameObj.remainingTime = inGameObj.totalTime;
 
 inGameObj.timer.textContent = `${formatTime(inGameObj.remainingTime)}s`;
@@ -25,6 +25,9 @@ inGameObj.startTimer = startTimer;
 inGameObj.resetTimer = resetTimer;
 inGameObj.showQuestion = showQuestion;
 inGameObj.gameOver = gameOver;
+inGameObj.moveToNextQuestion = moveToNextQuestion;
+inGameObj.showNextQuestion = showNextQuestion;
+
 
 inGameObj.requestQuizSet = requestQuizSet;
 inGameObj.postUserRecord = postUserRecord;
@@ -46,6 +49,9 @@ function startTimer() {
         if (inGameObj.remainingTime <= 0) {
             clearInterval(intervalID);
             inGameObj.timer.style.setProperty('--width', 0);
+            if (inGameObj.currentQuestionIndex < inGameObj.questions.length){
+                inGameObj.moveToNextQuestion();
+            }       
         }
 
     }, inGameObj.intervalTime)
@@ -63,6 +69,24 @@ function showQuestion() {
 `;
     inGameObj.userAnswerBox.value = ``; //clear textbox
 }
+
+//showNextQuestion + moveToNextQuestion : 타이머가 종료되면 자동으로 다음 문제로 이동함
+function showNextQuestion() {
+    inGameObj.questionContainer.innerHTML = `
+        <p>${inGameObj.questions[++inGameObj.currentQuestionIndex].question}</p>
+        
+    `;
+    inGameObj.userAnswerBox.value = ``; //clear textbox
+    
+}
+
+function moveToNextQuestion() {
+        inGameObj.resetTimer();
+        inGameObj.showNextQuestion(); 
+        inGameObj.startTimer();
+}
+
+
 
 // 서버에 퀴즈 세트 요청하고, 응답 받은 퀴즈들 inGameObj.questions에 넣음
 function requestQuizSet(){

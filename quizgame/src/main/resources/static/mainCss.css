@@ -13,6 +13,8 @@
     border: none;
     border-radius: 10px;
     padding-top: 15px 100px;
+    justify-content: center;
+    align-content: center;
 }
 
 body{
