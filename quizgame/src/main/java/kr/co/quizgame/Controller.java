@@ -10,17 +10,28 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class Controller {
     private final int VOLUME = 10; // 한 번에 보내는 데이터 수
-    private List<QuizSet> quizset; // 퀴즈 데이터 저장
+    private final CsvFileLoader csvFileLoader;
+    private List<QuizSet> quizSet; // 퀴즈 데이터 저장
     private List<Ranking> ranking; // 랭킹 데이터 저장
+
+    public Controller(){
+        this.csvFileLoader = new CsvFileLoader("/src/crawling/data.csv");
+        try {
+            csvFileLoader.run(null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        this.quizSet = csvFileLoader.getQuizSet();
+    }
 
     // 퀴즈 내용 요청
     // (문제, 정답) 10 개 요청
     @RequestMapping(method = RequestMethod.GET, path = "/getQuizSet")
     public List<QuizSet> getQuizSet(@RequestParam("flag") int flag) {
-        if (flag + VOLUME > quizset.size()) {
-            return quizset.subList(flag, quizset.size());
+        if (flag + VOLUME > quizSet.size()) {
+            return quizSet.subList(flag, quizSet.size());
         }
-        return quizset.subList(flag, flag + VOLUME);
+        return quizSet.subList(flag, flag + VOLUME);
     }
 
     // 유저 게임 결과 전송
