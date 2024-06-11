@@ -7,12 +7,7 @@ rankPageObj.searchBox = document.getElementById('searchBox');
 rankPageObj.score = 0;
 rankPageObj.currentPage = 0;
 rankPageObj.recordsPerPage = 10;
-rankPageObj.records = [
-    { name: 'TestPlayer1', score: 3 },
-    { name: 'TestPlayer2', score: 2 },
-    { name: 'TestPlayer3', score: 1 },
-    // Add more records as needed
-];
+rankPageObj.records = [];
 rankPageObj.filteredRecords = [...rankPageObj.records];
 
 rankPageObj.loadRecords = loadRecords;
@@ -23,6 +18,8 @@ function loadRecords() {
     const start = rankPageObj.currentPage * rankPageObj.recordsPerPage;
     const end = start + rankPageObj.recordsPerPage;
     const paginatedRecords = rankPageObj.filteredRecords.slice(start, end);
+
+    rankPageObj.requestRecords();
 
     paginatedRecords.forEach((record, index) => {
         const rankItem = document.createElement('div');
