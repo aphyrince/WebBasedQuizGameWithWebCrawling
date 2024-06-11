@@ -7,20 +7,20 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CsvFileLoader implements CommandLineRunner{
-    private final CsvFileReader csvFileReader;
+public class CsvQuizSetLoader implements CommandLineRunner{
+    private final CsvQuizSetReader csvQuizSetReader;
     private List<QuizSet> quizSet = null;
     private String filePath = null;
 
-    public CsvFileLoader(String filePath){
-        this.csvFileReader = new CsvFileReader();
+    public CsvQuizSetLoader(String filePath){
+        this.csvQuizSetReader = new CsvQuizSetReader();
         this.filePath = filePath;
     }
 
     @Override
     public void run(String... args) throws Exception{
         try{
-            this.quizSet = csvFileReader.readCsv(this.filePath);
+            this.quizSet = csvQuizSetReader.readCsv(this.filePath);
         }
         catch(IOException e){
             e.printStackTrace();

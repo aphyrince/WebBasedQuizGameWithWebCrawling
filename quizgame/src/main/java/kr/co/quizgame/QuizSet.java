@@ -8,4 +8,9 @@ public class QuizSet {
         this.question = question;
         this.answer = answer;
     }
+
+    public QuizSet(String[] args){
+        this.question = args[0];
+        this.answer = args[1];
+    }
 }

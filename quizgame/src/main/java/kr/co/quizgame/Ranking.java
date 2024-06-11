@@ -13,7 +13,19 @@ public class Ranking {
         this.name = name;
         this.score = score;
     }
-    
+
+    public Ranking(int rank, String name, int score){
+        this.name = name;
+        this.score = score;
+    }
+    public Ranking(String[] args){
+        this.rank = Integer.parseInt(args[0]);
+        this.name = args[1];
+        this.score = Integer.parseInt(args[2]);
+    }
+    public String getValue(){
+        return String.format("%s,%s,%s\n", ""+rank,name,""+score);
+    }
     // ranking 갱신
     public static void renewRanking(List<Ranking> ranking){
         // ranking.score 순으로 내림차순 정렬

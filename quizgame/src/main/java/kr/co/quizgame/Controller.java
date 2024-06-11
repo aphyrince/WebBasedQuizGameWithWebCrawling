@@ -1,27 +1,53 @@
 package kr.co.quizgame;
 
+import java.io.IOException;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.annotation.PreDestroy;
+
 @RestController
 public class Controller {
     private final int VOLUME = 10; // 한 번에 보내는 데이터 수
-    private final CsvFileLoader csvFileLoader;
+    @Autowired
+    private final CsvQuizSetLoader quizSetLoader;
+    @Autowired
+    private final CsvRankingLoader rankingLoader;
     private List<QuizSet> quizSet; // 퀴즈 데이터 저장
     private List<Ranking> ranking; // 랭킹 데이터 저장
 
+    private final String RankingFilePath = "./src/crawling/ranking.csv";
+    private final String QuizSetFilePath = "./src/crawling/data.csv";
+
     public Controller(){
-        this.csvFileLoader = new CsvFileLoader("/src/crawling/data.csv");
+        System.out.println("현재 작업 디렉토리: " + System.getProperty("user.dir"));
+        this.quizSetLoader = new CsvQuizSetLoader(QuizSetFilePath);
+        this.rankingLoader = new CsvRankingLoader(RankingFilePath);
         try {
-            csvFileLoader.run(null);
+            quizSetLoader.run(null);
+            rankingLoader.run(null);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        this.quizSet = csvFileLoader.getQuizSet();
+        this.quizSet = quizSetLoader.getQuizSet();
+        this.ranking = rankingLoader.getQuizSet();
+    }
+
+    // 서버가 꺼질 때 ranking 인스턴스를 서버에 저장하고 종료함.
+    @PreDestroy
+    public void saveRankingOnDestroy(){
+        try{
+            CsvRankingWriter.clearCsvFile(RankingFilePath);
+            CsvRankingWriter.WriteCsv(ranking, RankingFilePath);
+        }
+        catch(IOException e){
+            e.printStackTrace();
+        }
     }
 
     // 퀴즈 내용 요청
