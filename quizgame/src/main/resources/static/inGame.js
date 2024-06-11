@@ -6,12 +6,21 @@ inGameObj.userAnswerBox = document.getElementById('user-answer-box');
 
 inGameObj.currentQuestionIndex = 0;
 inGameObj.score = 0;
-inGameObj.questions = [];
+inGameObj.questions = [
+    {
+        question: "미국의 수도는?",
+        answer: "워싱턴"
+    },
+    {
+        question: "2010 - 1992 = ?",
+        answer: "18"
+    }
+];
 
 inGameObj.timer = document.getElementsByClassName('timer')[0];
-inGameObj.totalTime = 5000; //in ms
+inGameObj.totalTime = 15000; //in ms
 inGameObj.resetTotalTime = inGameObj.totalTime;
-inGameObj.intervalTime = inGameObj.totalTime/1000; //interval in ms;
+inGameObj.intervalTime = inGameObj.totalTime / 1000; //interval in ms;
 inGameObj.remainingTime = inGameObj.totalTime;
 
 inGameObj.timer.textContent = `${formatTime(inGameObj.remainingTime)}s`;
@@ -23,7 +32,7 @@ inGameObj.showQuestion = showQuestion;
 inGameObj.gameOver = gameOver;
 inGameObj.moveToNextQuestion = moveToNextQuestion;
 inGameObj.showNextQuestion = showNextQuestion;
-
+inGameObj.isCorrectAnswer = isCorrectAnswer;
 
 inGameObj.requestQuizSet = requestQuizSet;
 inGameObj.postUserRecord = postUserRecord;
@@ -45,9 +54,7 @@ function startTimer() {
         if (inGameObj.remainingTime <= 0) {
             clearInterval(intervalID);
             inGameObj.timer.style.setProperty('--width', 0);
-            if (inGameObj.currentQuestionIndex < inGameObj.questions.length){
-                inGameObj.moveToNextQuestion();
-            }       
+            inGameObj.gameOver();
         }
 
     }, inGameObj.intervalTime)
@@ -73,75 +80,88 @@ function showNextQuestion() {
         
     `;
     inGameObj.userAnswerBox.value = ``; //clear textbox
-    
+
 }
 
 function moveToNextQuestion() {
-        inGameObj.resetTimer();
-        inGameObj.showNextQuestion(); 
-        inGameObj.startTimer();
+    inGameObj.resetTimer();
+    inGameObj.showNextQuestion();
+    inGameObj.startTimer();
 }
 
 
 
 // 서버에 퀴즈 세트 요청하고, 응답 받은 퀴즈들 inGameObj.questions에 넣음
-function requestQuizSet(){
+function requestQuizSet() {
+    console.log("requestQuizSet ::");
     const ajaxRequest = new XMLHttpRequest();
 
-    ajaxRequest.onreadystatechange = event =>{
+    ajaxRequest.onreadystatechange = event => {
         const currentAjaxRequest = event.currentTarget;
-        if(currentAjaxRequest.readyState === XMLHttpRequest.DONE &&
-            currentAjaxRequest.status === 200){
+        if (currentAjaxRequest.readyState === XMLHttpRequest.DONE) {
+            if (currentAjaxRequest.status === 200) {
                 const responsedQuizSet = JSON.parse(currentAjaxRequest.responseText);
-                responsedQuizSet.forEach(quizSet =>{
+                responsedQuizSet.forEach(quizSet => {
                     inGameObj.questions.push(quizSet);
                 });
+                console.log("receive quizSet : ", inGameObj.questions);
+                console.log("questions iter:");
+                for (let i = 0; i < inGameObj.questions.length; i++) {
+                    console.log(inGameObj.questions[i]);
+                    console.log(inGameObj.questions[i].question);
+                    console.log(inGameObj.questions[i].answer);
+                }
             }
-        else{
-            console.error("response error : getQuizSet");
+            else {
+                console.error("response error : getQuizSet");
+            }
         }
     };
     ajaxRequest.open('GET', `/getQuizSet?flag=${inGameObj.questions.length}`);
     ajaxRequest.send();
 }
 
-function postUserRecord(paramName, paramResultScore){
+function postUserRecord(paramName, paramResultScore) {
     const ajaxRequest = new XMLHttpRequest();
 
-    ajaxRequest.onreadystatechange = event =>{
+    ajaxRequest.onreadystatechange = event => {
         const currentAjaxRequest = event.currentTarget;
-        if(currentAjaxRequest.readyState === XMLHttpRequest.DONE &&
-            currentAjaxRequest.status === 200){
+        if (currentAjaxRequest.readyState === XMLHttpRequest.DONE) {
+            if (currentAjaxRequest.status === 200) {
                 console.log("유저 랭킹 등록 성공");
             }
-        else{
-            console.error("response error : postRecord");
+            else {
+                console.error("response error : postRecord");
+            }
         }
     };
-    let userRankingJson = {name:paramName,resultScore:paramResultScore};
-    userRankingJson = JSON.stringify(userRankingJson);
-    console.log(userRankingJson);
-    ajaxRequest.open('POST', `/postUserGameResultRecord`);
-    ajaxRequest.setRequestHeader('Content-Type', 'application/json');
-    ajaxRequest.send(userRankingJson);
+    // let userRankingJson = {name:paramName,resultScore:paramResultScore};
+    // userRankingJson = JSON.stringify(userRankingJson);
+    // console.log(userRankingJson);
+    ajaxRequest.open('POST', `/postUserGameResultRecord?name=${paramName}&resultScore=${paramResultScore}`);
+    ajaxRequest.send();
 }
 
 // 게임 오버 시 나오는 액션
-function gameOver(){
+function gameOver() {
     let isWillSave = confirm(`Your score = ${inGameObj.score} !\n Would you like to save the record?`);
-    if(isWillSave){
+    if (isWillSave) {
         let playerName = '';
-        while(true){
-            playerName = prompt('Please input your name.');   
-            if(playerName === ''){
+        while (true) {
+            playerName = prompt('Please input your name.');
+            if (playerName === '') {
                 alert('" " is not a name!');
                 continue;
             }
             break;
         }
         //서버에 playerName과 score 전송
-        inGameObj.postUserRecord(playerName,inGameObj.score);
+        inGameObj.postUserRecord(playerName, inGameObj.score);
     }
+}
+
+function isCorrectAnswer(answer, userAnswer){
+    return userAnswer.includes(answer);
 }
 
 export default inGameObj;
