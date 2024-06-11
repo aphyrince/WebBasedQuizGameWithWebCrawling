@@ -7,31 +7,27 @@
     <title>WebBasedQuizGameWithWebCrawling</title>
     <link rel="stylesheet" href="mainCss.css">
     <link rel="stylesheet" href="inGameCss.css">
-
 </head>
 
 <body>
-    <!-- rootContainer -->
-    <!-- All of content will be included in this rootContainer-->
     <div id="rootContainer" class="container">
         <header>
             <!-- I don't have good idea to fill this section yet.
                 If when a good idea comes to mind, plz add anything.
                 Untill-->
         </header>
-        <!-- Only one of the three contents below (home, ranking, inGame) will be displayed at a time. -->
+        
         <div id="home" class="homeScreen">
-            <!-- Start button, ranking button and etc will be added in this section-->
-
-            <div class="button-grid">
-                <div class="box">
-                    <h1 style="text-align: center;">Quiz Demo</h1>
+            <div class="hero-section">
+                <h1 class="hero-title">Welcome to the Quiz Game</h1>
+                <p class="hero-subtitle">Test your knowledge and challenge your friends!</p>
+                <div class="button-grid">
                     <button class="start-button" id="startBtn">Start Quiz</button>
                     <button class="show-record-button" id="showRecordBtn">Show Record</button>
                 </div>
             </div>
-
         </div>
+        
         <div id="ranking" class="rankingScreen" style="display:none">
             <h1>Quiz Record</h1>
             <input type="text" id="searchBox" placeholder="Search by name..." />
@@ -40,13 +36,12 @@
             </div>
             <button id="backToHomeBtn">Back to Home</button>
         </div>
+        
         <div id="inGame" class="quizScreen" style="display:none;">
             <div class="bg"></div>
-            <!-- The actual game play will be excuted in this section -->
-            
-            <div class = "timerContainer">
-                <div class = "score">Score: 20</div> 
-                <div class = "timer" style="--width: 100"></div>
+            <div class="timerContainer">
+                <div class="score">Score: 20</div> 
+                <div class="timer" style="--width: 100"></div>
             </div>
             <div id="questionContainer" style="margin : auto"></div>
             <div class="answer-submit-header">
@@ -55,13 +50,11 @@
                     <img class="next-icon" src="icons/right-arrow.png">
                 </button>
             </div>
-
         </div>
 
         <footer>
             <!-- Team member, info will be added in this section-->
         </footer>
-
     </div>
     <script src="mainJs.js" type="module"></script>
 </body>
