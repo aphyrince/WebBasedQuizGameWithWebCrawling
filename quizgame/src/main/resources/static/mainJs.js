@@ -55,6 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (userAnswer.toLowerCase() === inGameObj.questions[inGameObj.currentQuestionIndex].answer.toLowerCase()) {
                 inGameObj.score++;
                 inGameObj.currentQuestionIndex++;
+                inGameObj.updateScore();
                 // console.log("정답 "+inGameObj.score,userAnswer+","+inGameObj.questions[inGameObj.currentQuestionIndex].answer);
             }
             // 오답일 시
@@ -93,6 +94,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (userAnswer.toLowerCase() === inGameObj.questions[inGameObj.currentQuestionIndex].answer.toLowerCase()) {
             inGameObj.score++;
             inGameObj.currentQuestionIndex++;
+            inGameObj.updateScore();
+
             // console.log("정답 "+inGameObj.score,userAnswer+","+inGameObj.questions[inGameObj.currentQuestionIndex].answer);
         }
         // 오답일 시
@@ -124,4 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     });
 
+    
+
 });
+

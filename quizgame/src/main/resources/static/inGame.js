@@ -3,6 +3,7 @@ inGameObj.quizScreen = document.getElementById('inGame');
 inGameObj.nextQuestionBtn = document.getElementById('nextQuestionBtn');
 inGameObj.questionContainer = document.getElementById('questionContainer');
 inGameObj.userAnswerBox = document.getElementById('user-answer-box');
+inGameObj.scoreText = document.getElementById('scoreText');
 
 inGameObj.currentQuestionIndex = 0;
 inGameObj.score = 0;
@@ -29,6 +30,9 @@ inGameObj.moveToNextQuestion = moveToNextQuestion;
 inGameObj.showNextQuestion = showNextQuestion;
 
 
+inGameObj.updateScore = updateScore;
+
+
 inGameObj.requestQuizSet = requestQuizSet;
 inGameObj.postUserRecord = postUserRecord;
 
@@ -51,7 +55,7 @@ function startTimer() {
             inGameObj.timer.style.setProperty('--width', 0);
             if (inGameObj.currentQuestionIndex < inGameObj.questions.length){
                 inGameObj.moveToNextQuestion();
-            }       
+            }  
         }
 
     }, inGameObj.intervalTime)
@@ -68,6 +72,11 @@ function showQuestion() {
     
 `;
     inGameObj.userAnswerBox.value = ``; //clear textbox
+}
+
+//inGameScreen update score in real time
+function updateScore() {
+    inGameObj.scoreText.textContent = `Score: ${inGameObj.score}`;
 }
 
 //showNextQuestion + moveToNextQuestion : 타이머가 종료되면 자동으로 다음 문제로 이동함

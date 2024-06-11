@@ -23,9 +23,10 @@
         <div id="home" class="homeScreen">
             <!-- Start button, ranking button and etc will be added in this section-->
 
-            <div class="button-grid">
-                <div class="box">
-                    <h1 style="text-align: center;">Quiz Demo</h1>
+            
+            <div class="box">
+                <h1 style="text-align: center; margin-bottom: 50px; margin-top: 50px; padding-left: 0px; padding-right: 0px;">Quiz Demo</h1>
+                <div class="button-grid">
                     <button class="start-button" id="startBtn">Start Quiz</button>
                     <button class="show-record-button" id="showRecordBtn">Show Record</button>
                 </div>
@@ -45,12 +46,12 @@
             <!-- The actual game play will be excuted in this section -->
             
             <div class = "timerContainer">
-                <div class = "score">Score: 20</div> 
+                <div class = "score" id = "scoreText">Score: 0</div> 
                 <div class = "timer" style="--width: 100"></div>
             </div>
             <div id="questionContainer" style="margin : auto"></div>
             <div class="answer-submit-header">
-                <input type="text" id="user-answer-box" placeholder="Type your answer here">
+                <input type="text" id="user-answer-box" placeholder="Type your answer here" autofocus>
                 <button id="nextQuestionBtn">
                     <img class="next-icon" src="icons/right-arrow.png">
                 </button>

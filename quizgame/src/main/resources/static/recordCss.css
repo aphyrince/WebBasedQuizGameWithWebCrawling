@@ -39,7 +39,7 @@ button:active{
 
 .leaderboard-header{
     position: fixed;
-    background-color: rgb(187, 218, 229);
+    
     display: flex;
     grid-template-columns: 1fr 1fr 1fr;
     right: 0px;
