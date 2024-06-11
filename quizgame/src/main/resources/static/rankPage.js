@@ -8,46 +8,51 @@ rankPageObj.score = 0;
 rankPageObj.currentPage = 0;
 rankPageObj.recordsPerPage = 10;
 rankPageObj.records = [];
-rankPageObj.filteredRecords = [...rankPageObj.records];
 
 rankPageObj.loadRecords = loadRecords;
-rankPageObj.requestRecords = requestRecords; // 구현만 해놓은 상황. 다른 곳에서 호출해줘야 함
+rankPageObj.requestRecords = requestRecords;
 
 
-function loadRecords() {
-    const start = rankPageObj.currentPage * rankPageObj.recordsPerPage;
-    const end = start + rankPageObj.recordsPerPage;
-    const paginatedRecords = rankPageObj.filteredRecords.slice(start, end);
-
-    rankPageObj.requestRecords();
-
-    paginatedRecords.forEach((record, index) => {
+async function loadRecords() {
+    console.log("loadRecords:: ");
+    rankPageObj.recordContainer.innerHTML = '';
+    rankPageObj.records = [];
+    await rankPageObj.requestRecords();
+    rankPageObj.records.forEach((record) => {
+        console.log(record);
         const rankItem = document.createElement('div');
         rankItem.className = 'rank-item';
-        rankItem.innerHTML = `<span>${start + index + 1}. ${record.name}</span><span>${record.score}</span>`;
+        rankItem.innerHTML = `<span>${record.rank}. ${record.name}</span><span>${record.score}</span>`;
         rankPageObj.recordContainer.appendChild(rankItem);
     });
 }
 
 // 서버에 랭킹 record를 요청하고, 응답 받은 랭킹들을 rankPageObj.records에 넣음
-function requestRecords(){
-    const ajaxRequest = new XMLHttpRequest();
+function requestRecords() {
+    console.log("requestRecords:: ")
+    return new Promise((resolve, reject) => {
+        const ajaxRequest = new XMLHttpRequest();
 
-    ajaxRequest.onreadystatechange = event =>{
-        const currentAjaxRequest = event.currentTarget;
-        if(currentAjaxRequest.readyState === XMLHttpRequest.DONE &&
-            currentAjaxRequest.status === 200){
-                const responsedQuizSet = JSON.parse(currentAjaxRequest.responseText);
-                responsedQuizSet.forEach(record =>{
-                    rankPageObj.records.push(record);
-                });
+        ajaxRequest.onreadystatechange = event => {
+            const currentAjaxRequest = event.currentTarget;
+            if (currentAjaxRequest.readyState === XMLHttpRequest.DONE) {
+                if (currentAjaxRequest.status === 200) {
+                    const responsedQuizSet = JSON.parse(currentAjaxRequest.responseText);
+                    responsedQuizSet.forEach(record => {
+                        rankPageObj.records.push(record);
+                    });
+                    console.log(rankPageObj.records);
+                    resolve();
+                }
+                else {
+                    console.error("response error : getRecord");
+                    reject("response error : getRecord");
+                }
             }
-        else{
-            console.error("response error : getRecord");
-        }
-    };
-    ajaxRequest.open('GET', `/getRankingInfoSet?flag=${rankPageObj.records.length}`);
-    ajaxRequest.send();
+        };
+        ajaxRequest.open('GET', `/getRankingInfoSet?flag=${rankPageObj.records.length}`);
+        ajaxRequest.send();
+    });
 }
 
 

@@ -5,14 +5,13 @@ import rankPageObj from "./rankPage.js";
 document.addEventListener('DOMContentLoaded', () => {
 
     homeObj.startQuizBtn.addEventListener('click', () => {
+        inGameObj.requestQuizSet();
         homeObj.homeScreen.style.display = 'none';
         inGameObj.quizScreen.style.display = 'block';
         inGameObj.resetTimer();
         inGameObj.showQuestion();
         inGameObj.startTimer();
         inGameObj.currentQuestionIndex = 0;
-        
-        inGameObj.requestQuizSet();
     });
 
     homeObj.showRecordBtn.addEventListener('click', () => {
@@ -31,7 +30,6 @@ document.addEventListener('DOMContentLoaded', () => {
         while(rankPageObj.recordContainer.hasChildNodes()){
             rankPageObj.recordContainer.removeChild(rankPageObj.recordContainer.firstChild);
         }
-        //inGameObj.currentQuestionIndex = 0; //temporary fix
     });
 
     rankPageObj.searchBox.addEventListener('input', () => {
@@ -51,80 +49,41 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     inGameObj.userAnswerBox.addEventListener('keydown', (event) => {
-        const userAnswer = document.getElementById('user-answer-box').value;
         if(event.key === 'Enter'){
             event.preventDefault();
-                    // 정답일 시
-            if (userAnswer.toLowerCase() === inGameObj.questions[inGameObj.currentQuestionIndex].answer.toLowerCase()) {
-                inGameObj.score++;
-                inGameObj.currentQuestionIndex++;
-                // console.log("정답 "+inGameObj.score,userAnswer+","+inGameObj.questions[inGameObj.currentQuestionIndex].answer);
-            }
-            // 오답일 시
-            else if (userAnswer.toLowerCase() !== inGameObj.questions[inGameObj.currentQuestionIndex].answer.toLowerCase()){ //질문 넘어가기
-                inGameObj.currentQuestionIndex++;
-            }
-            else{
-                // console.log("오답 "+inGameObj.score,userAnswer+","+inGameObj.questions[inGameObj.currentQuestionIndex].answer);
-                inGameObj.gameOver();
-                inGameObj.quizScreen.style.display = 'none';
-                rankPageObj.recordScreen.style.display = 'block';
-                rankPageObj.loadRecords();
-            }
-            
-            //문제가 다 떨어지면 서버에 추가 문제 요청
-            if (inGameObj.currentQuestionIndex === inGameObj.questions.length) {
-                inGameObj.requestQuizSet();
-            }
-            if (inGameObj.currentQuestionIndex < inGameObj.questions.length) {
-                inGameObj.showQuestion();
-                inGameObj.resetTimer();
-            }
-            else {
-                inGameObj.gameOver();
-                inGameObj.quizScreen.style.display = 'none';
-                rankPageObj.recordScreen.style.display = 'block';
-                rankPageObj.loadRecords();
-            }
+            submitAnswerAction();
         }
     });
 
     inGameObj.nextQuestionBtn.addEventListener('click', () => {
+        submitAnswerAction();
+    });
+
+
+    // 정답 제출 했을 때의 행동
+    function submitAnswerAction(){
         const userAnswer = document.getElementById('user-answer-box').value;
-        console.log(inGameObj.currentQuestionIndex);
+        console.log("submitted answer = ",userAnswer);
+
         // 정답일 시
-        if (userAnswer.toLowerCase() === inGameObj.questions[inGameObj.currentQuestionIndex].answer.toLowerCase()) {
+        if(userAnswer!== "" && inGameObj.isCorrectAnswer(userAnswer,inGameObj.questions[inGameObj.currentQuestionIndex].answer)){
             inGameObj.score++;
             inGameObj.currentQuestionIndex++;
-            // console.log("정답 "+inGameObj.score,userAnswer+","+inGameObj.questions[inGameObj.currentQuestionIndex].answer);
-        }
-        // 오답일 시
-        else if (userAnswer.toLowerCase() !== inGameObj.questions[inGameObj.currentQuestionIndex].answer.toLowerCase()){ //질문 넘어가기
-            inGameObj.currentQuestionIndex++;
-        }
-        else{
-            // console.log("오답 "+inGameObj.score,userAnswer+","+inGameObj.questions[inGameObj.currentQuestionIndex].answer);
-            inGameObj.gameOver();
-            inGameObj.quizScreen.style.display = 'none';
-            rankPageObj.recordScreen.style.display = 'block';
-            rankPageObj.loadRecords();
-        }
-        
-        //문제가 다 떨어지면 서버에 추가 문제 요청
-        if (inGameObj.currentQuestionIndex === inGameObj.questions.length) {
-            inGameObj.requestQuizSet();
-        }
-        if (inGameObj.currentQuestionIndex < inGameObj.questions.length) {
-            inGameObj.showQuestion();
-            inGameObj.resetTimer();
-        }
-        else {
-            inGameObj.gameOver();
-            inGameObj.quizScreen.style.display = 'none';
-            rankPageObj.recordScreen.style.display = 'block';
-            rankPageObj.loadRecords();
-        }
 
-    });
+            // 클라이언트가 가지고 있는 문제가 부족하면 서버에 추가 문제를 요청함.
+            if(inGameObj.currentQuestionIndex <= inGameObj.questions.length){
+                inGameObj.requestQuizSet();
+            }
+            // 다음 문제 표시
+            inGameObj.resetTimer();
+            inGameObj.showQuestion();
+        }
+        else{   // 오답일 시
+            inGameObj.gameOver();
+            inGameObj.quizScreen.style.display = 'none';
+            rankPageObj.recordScreen.style.display = 'block';
+            rankPageObj.loadRecords();
+        }
+    }
 
 });
