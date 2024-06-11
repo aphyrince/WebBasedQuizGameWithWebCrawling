@@ -1,47 +1,76 @@
-.button-grid{
-    display: grid;
-    justify-content: center;
-    row-gap: 20px;
-    grid-template-columns: 200px;
-    margin-top: 200px;
-    padding-bottom: 20px;
-
+/* 기본적인 CSS 리셋 추가 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-.box{
-    box-shadow: 0px 0px 5px;
+/* 메인 화면에만 영향을 주는 스타일을 정의 */
+.homeScreen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* 수정된 부분 */
+    background: linear-gradient(135deg, #71b7e6, #9b59b6);
+    color: #fff;
+}
+
+.hero-section {
+    padding: 50px;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 1.5s ease-in-out;
+    text-align: center;
+}
+
+.hero-title {
+    font-size: 3em;
+    margin-bottom: 10px;
+}
+
+.hero-subtitle {
+    font-size: 1.5em;
+    margin-bottom: 30px;
+}
+
+.button-grid {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.start-button,
+.show-record-button {
+    padding: 15px 30px;
+    font-size: 1.2em;
     border: none;
     border-radius: 10px;
-    padding-top: 15px 100px;
-    justify-content: center;
-    align-content: center;
-}
-
-body{
-    margin:0;
-}
-
-button{
-    padding: 20px 40px;
-    font-size: 20px;
-    border-style: none;
-    border-radius: 10px;
-    background-color: rgb(59, 213, 213);
+    background-color: #3bd5d5;
     color: white;
     cursor: pointer;
-    transition: background-color 0.4s;
+    transition: background-color 0.4s, transform 0.2s;
 }
 
-button:hover{
+.start-button:hover,
+.show-record-button:hover {
     background-color: rgba(59, 213, 213, 0.7);
+    transform: translateY(-5px);
 }
 
-button:active{
+.start-button:active,
+.show-record-button:active {
     background-color: rgba(59, 213, 213, 1);
+    transform: translateY(0);
 }
 
-#recordContainer {
-    margin: 20px 0;
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
-
-
