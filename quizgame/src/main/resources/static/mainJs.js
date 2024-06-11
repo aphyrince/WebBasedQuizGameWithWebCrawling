@@ -11,6 +11,8 @@ document.addEventListener('DOMContentLoaded', () => {
         inGameObj.showQuestion();
         inGameObj.startTimer();
         inGameObj.currentQuestionIndex = 0;
+        
+        inGameObj.requestQuizSet();
     });
 
     homeObj.showRecordBtn.addEventListener('click', () => {
@@ -18,6 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
         rankPageObj.recordScreen.style.display = 'block';
         rankPageObj.recordContainer.innerHTML = '';
         rankPageObj.currentPage = 0;
+
         rankPageObj.loadRecords();
     });
 

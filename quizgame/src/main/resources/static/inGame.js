@@ -6,11 +6,7 @@ inGameObj.userAnswerBox = document.getElementById('user-answer-box');
 
 inGameObj.currentQuestionIndex = 0;
 inGameObj.score = 0;
-inGameObj.questions = [
-    { question: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.', answer: '4' },
-    { question: 'What is the capital of France?', answer: 'Paris' },
-    { question: 'What is the largest planet in our solar system?', answer: 'Jupiter' }
-];
+inGameObj.questions = [];
 
 inGameObj.timer = document.getElementsByClassName('timer')[0];
 inGameObj.totalTime = 5000; //in ms
