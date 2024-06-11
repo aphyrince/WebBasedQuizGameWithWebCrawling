@@ -10,7 +10,7 @@ public class QuizSet {
     }
 
     public QuizSet(String[] args){
-        this.question = args[0];
-        this.answer = args[1];
+        this.question = args[0].trim();
+        this.answer = args[1].trim();
     }
 }

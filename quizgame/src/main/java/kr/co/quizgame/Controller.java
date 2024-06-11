@@ -1,9 +1,14 @@
 package kr.co.quizgame;
 
+import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,40 +19,33 @@ import jakarta.annotation.PreDestroy;
 @RestController
 public class Controller {
     private final int VOLUME = 10; // 한 번에 보내는 데이터 수
-    @Autowired
-    private final CsvQuizSetLoader quizSetLoader;
-    @Autowired
-    private final CsvRankingLoader rankingLoader;
+
     private List<QuizSet> quizSet; // 퀴즈 데이터 저장
     private List<Ranking> ranking; // 랭킹 데이터 저장
 
-    private final String RankingFilePath = "./src/crawling/ranking.csv";
-    private final String QuizSetFilePath = "./src/crawling/data.csv";
-
-    public Controller(){
-        System.out.println("현재 작업 디렉토리: " + System.getProperty("user.dir"));
-        this.quizSetLoader = new CsvQuizSetLoader(QuizSetFilePath);
-        this.rankingLoader = new CsvRankingLoader(RankingFilePath);
-        try {
-            quizSetLoader.run(null);
-            rankingLoader.run(null);
-        } catch (Exception e) {
-            e.printStackTrace();
+    // 서버가 켜질 때 서버 컴퓨터에 저장된 quiz 정보와 ranking 정보 불러옴
+    public Controller() throws IOException{
+        quizSet = new ArrayList<>();
+        ranking = new ArrayList<>();
+        List<String> quizSetData = Files.readAllLines(Paths.get(new ClassPathResource("data/data.csv").getURI()));
+        List<String> rankingData = Files.readAllLines(Paths.get(new ClassPathResource("data/ranking.csv").getURI()));
+        for(String value : quizSetData){
+            quizSet.add(new QuizSet(value.split(",")));
         }
-        this.quizSet = quizSetLoader.getQuizSet();
-        this.ranking = rankingLoader.getQuizSet();
+        for(String value : rankingData){
+            ranking.add(new Ranking(value.split(",")));
+        }
     }
 
     // 서버가 꺼질 때 ranking 인스턴스를 서버에 저장하고 종료함.
     @PreDestroy
-    public void saveRankingOnDestroy(){
-        try{
-            CsvRankingWriter.clearCsvFile(RankingFilePath);
-            CsvRankingWriter.WriteCsv(ranking, RankingFilePath);
+    public void saveRankingOnDestroy() throws IOException{
+        Files.write(Paths.get(new ClassPathResource("data/ranking.csv").getURI()), Collections.emptyList());
+        FileWriter writer = new FileWriter(new ClassPathResource("data/ranking.csv").getPath());
+        for(Ranking rank : ranking){
+            writer.append(rank.getValue()+"\n");
         }
-        catch(IOException e){
-            e.printStackTrace();
-        }
+        writer.close();
     }
 
     // 퀴즈 내용 요청

@@ -19,9 +19,9 @@ public class Ranking {
         this.score = score;
     }
     public Ranking(String[] args){
-        this.rank = Integer.parseInt(args[0]);
-        this.name = args[1];
-        this.score = Integer.parseInt(args[2]);
+        this.rank = Integer.parseInt(args[0].trim());
+        this.name = args[1].trim();
+        this.score = Integer.parseInt(args[2].trim());
     }
     public String getValue(){
         return String.format("%s,%s,%s\n", ""+rank,name,""+score);
