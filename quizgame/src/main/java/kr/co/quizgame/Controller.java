@@ -62,7 +62,6 @@ public class Controller {
     }
 
     // 퀴즈 내용 요청
-    // (문제, 정답) 10 개 요청
     @RequestMapping(method = RequestMethod.GET, path = "/getQuizSet")
     public List<QuizSet> getQuizSet(@RequestParam("flag") int flag) {
         synchronized(quizSet){
